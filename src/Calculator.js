@@ -1,33 +1,60 @@
-import React, {Component} from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
 class Calculator extends Component {
   constructor(props) {
     super();
     this.state = {
+      operator: "",
       num1: 0,
       num2: 0,
-      sum: '',
+      result: 0,
     };
   }
-  setNum = (e, num) => {
-    e.preventDefault();
+
+  handleOperatorChange = (e) => {
     this.setState({
-      [num]: parseInt(e.target.value),
+      operator: e.target.value,
     });
-    console.log(num)
   };
-  addNum = (e, num1, num2) => {
-    e.preventDefault();
+
+  setNum = (e) => {
     this.setState({
-      sum: this.state.num1 + this.state.num2,
+      [e.target.name]: Number(e.target.value),
     });
-    console.log(this.state.sum)
+  };
+  // setNum = (e, num) => {
+  //   e.preventDefault();
+  //   this.setState({
+  //     [num]: Number(e.target.value),
+  //   });
+  //   console.log(num)
+  // };
+  actionHandler = (e, num1, num2) => {
+    e.preventDefault();
+    if (this.state.operator === "+") {
+      this.setState({
+        result: this.state.num1 + this.state.num2,
+      });
+    } else if (this.state.operator === "-") {
+      this.setState({
+        result: this.state.num1 - this.state.num2,
+      });
+    } else if (this.state.operator === "*") {
+      this.setState({
+        result: this.state.num1 * this.state.num2,
+      });
+    } else if (this.state.operator === "/") {
+      this.setState({
+        result: this.state.num1 / this.state.num2,
+      });
+    }
+    console.log(this.state.sum);
   };
   render() {
     return (
       <div className="container">
-        <h1>Add with React!</h1>
+        <h1>Calculate with React!</h1>
 
         <div className="add">
           <form onSubmit={this.setNum}>
@@ -40,7 +67,19 @@ class Calculator extends Component {
                 this.setNum(e, "num1");
               }}
             />
-            <span>+</span>
+            <label>
+              <select
+                value={this.state.operator}
+                onChange={(e) => {
+                  this.handleOperatorChange(e);
+                }}
+              >
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+              </select>
+            </label>
             <input
               type="number"
               name="num2"
@@ -48,9 +87,15 @@ class Calculator extends Component {
               value={this.state.num2}
               onChange={(e) => this.setNum(e, "num2")}
             />
-            <button type="submit" onClick={(e) => this.addNum(e, "sum")}>=</button>
-            <h5>{this.state.sum}</h5>
-          </form>              
+            <button
+              type="submit"
+              onClick={(e) => this.actionHandler(e, "result")}
+            >
+              Answer
+            </button>
+
+            <h5>{this.state.result}</h5>
+          </form>
         </div>
       </div>
     );
