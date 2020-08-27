@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./Calculator.css";
 
 class Calculator extends Component {
   constructor(props) {
@@ -23,40 +23,42 @@ class Calculator extends Component {
       [e.target.name]: Number(e.target.value),
     });
   };
-  // setNum = (e, num) => {
-  //   e.preventDefault();
-  //   this.setState({
-  //     [num]: Number(e.target.value),
-  //   });
-  //   console.log(num)
-  // };
+
   actionHandler = (e, num1, num2) => {
     e.preventDefault();
     if (this.state.operator === "+") {
       this.setState({
         result: this.state.num1 + this.state.num2,
+        num1: 0,
+        num2: 0,
       });
     } else if (this.state.operator === "-") {
       this.setState({
         result: this.state.num1 - this.state.num2,
+        num1: 0,
+        num2: 0,
       });
     } else if (this.state.operator === "*") {
       this.setState({
         result: this.state.num1 * this.state.num2,
+        num1: 0,
+        num2: 0,
       });
     } else if (this.state.operator === "/") {
       this.setState({
         result: this.state.num1 / this.state.num2,
+        num1: 0,
+        num2: 0,
       });
     }
     console.log(this.state.sum);
   };
   render() {
     return (
-      <div className="container">
+      <div className="Container">
         <h1>Calculate with React!</h1>
 
-        <div className="add">
+        <div className="Math">
           <form onSubmit={this.setNum}>
             <input
               type="number"
@@ -94,7 +96,7 @@ class Calculator extends Component {
               Answer
             </button>
 
-            <h5>{this.state.result}</h5>
+            <h5 className='Result'>{this.state.result}</h5>
           </form>
         </div>
       </div>
